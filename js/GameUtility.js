@@ -22,14 +22,13 @@ class GameUtility {
     
             for(let j=0;j<8;j++) {
                 const id = String(i+(i*j))
-                const card = document.createElement('div')
-                const cardImageElement = document.createElement('img')
+                const card = document.createElement('a')
                 const backImageElement = document.createElement('img')
                 let shouldFindPair = true
                 
-                card.id = "card-" + id
+                card.href = '#'
                 backImageElement.src = backImgSrc
-                backImageElement.alt = 'Back of card'
+                backImageElement.alt = ""
                 backImageElement.style.opacity = 1
             
     
@@ -38,15 +37,12 @@ class GameUtility {
     
                     if (cardImageMap.has(cardImage) && !cardImageMap.get(cardImage).has(id) && cardImageMap.get(cardImage).size < 2) {
                         cardImageMap.get(cardImage).add(id)
-                        cardImageElement.src = cardImage
-                        cardImageElement.hidden = true
-                        cardImageElement.style.opacity = 0
+                        card.id = cardImage
                         shouldFindPair = false
                     }
                 }
     
                 card.appendChild(backImageElement)
-                card.appendChild(cardImageElement)
     
                 // add click evesnt handler for each card link
                 card.addEventListener("click", () => {
@@ -75,8 +71,7 @@ class GameUtility {
 
     flipCard(card) {
         if(this.flippedCards < 2) {
-            this.animateCardFlip(card.firstElementChild)
-            this.animateCardFlip(card.lastElementChild)
+            this.animateCardFlip(card)
 
             if(this.flippedCards === 0) {
                 this.firstGuess = card
@@ -92,33 +87,34 @@ class GameUtility {
             }
         }
         else {
-            this.animateCardFlip(card.firstElementChild)
-            this.animateCardFlip(card.lastElementChild)
+            this.animateCardFlip(card)
         }
     }
 
     animateCardFlip(element) {
-        let opacity = Number(element.style.opacity)
-        
-        if(opacity === 0) {
-            element.hidden = !element.hidden
-    
-            let interval
-            interval = setInterval(function() {
-    
-                if (opacity < 1) { 
-                    opacity += 0.25
-                    element.style.opacity = String(opacity);
+        let opacity = Number(element.firstElementChild.style.opacity)
+        let interval
+
+        interval = setInterval(function() {
+
+            if (opacity > 0) { 
+                opacity -= 0.25
+                element.firstElementChild.style.opacity = String(opacity);
+            } 
+            else { 
+                if(element.classList.contains('flipped')) {
+                    element.firstElementChild.src = backImgSrc
+                    element.classList.remove('flipped')
                 } 
-                else { 
-                    clearInterval(interval)
-                } 
-            }, 100)
-        }
-        else if(opacity === 1) {
-            element.hidden = !element.hidden
-            element.style.opacity = 0
-        }
+                else {
+                    element.firstElementChild.src = element.id
+                    element.classList.add('flipped')
+                }
+                
+                element.firstElementChild.style.opacity = 1
+                clearInterval(interval)
+            } 
+        }, 100)
     }
 
     checkforMatch() {
@@ -144,11 +140,10 @@ class GameUtility {
     }
 
     doCardsMatch() {
-        return this.firstGuess.lastElementChild.src === this.secondGuess.lastElementChild.src;
+        return this.firstGuess.id === this.secondGuess.id;
     }
 
     disableCard(card) {
-        card.lastElementChild.src = blankImgSrc
         card.firstElementChild.src = blankImgSrc
         card.classList.add('disabled')
     }
