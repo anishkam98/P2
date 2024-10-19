@@ -1,0 +1,84 @@
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 100%;
+    background-color: white;
+    width: 710px;  
+    margin: 1em auto;
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 0 2em 2em 2em;
+}
+h1 { 
+    font-size: 150%;
+    color: cornflowerblue;
+    margin-bottom: .5em;
+}
+label {
+    float: left;
+    width: 10em;
+}
+input, select { 
+    width: 10em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+input[type=checkbox] { 
+    width: 2em;
+}
+header p {
+	margin: 0 2em 1em 0;
+}
+#new_game, #player, #high_score, #correct {
+	float: left;
+}
+#cards {
+    display: flex;
+    flex-direction: column;
+}
+#cards img {
+    height: 100px;
+    width: 80px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    float: left; 
+}
+.clear {
+    clear: both;
+}
+.hide {
+	display: none;
+}
+
+.tabs {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+  
+/* Style the buttons that are used to open the tab content */
+.tabs button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+  
+/* Change background color of buttons on hover */
+.tabs button:hover {
+    background-color: #ddd;
+}
+  
+/* Create an active/current tablink class */
+.tabs button.active {
+    background-color: #ccc;
+}
+  
+/* Style the tab content */
+.tabcontent {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
